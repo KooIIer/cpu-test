@@ -1,2 +1,2 @@
 #!/bin/bash
-gcc main.c -o main && ./main $@
+gcc -Wall -Wextra main.c f.c inst.c -o main && ./main $@

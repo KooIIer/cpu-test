@@ -1,8 +1,8 @@
 #include "settings.h"
 #include "inst.h"
+#include "f.h"
 #include <stdint.h>
 #include <stdio.h>
-#include <stdlib.h>
 
 typedef union {
     struct {
@@ -16,20 +16,22 @@ struct {
     registers regs;
 } cpu;
 
-void error(char* name) {
-    printf("err: %s\n", name);
-    exit(1);
-}
-
 void prepare(char* name) {
     cpu.regs.s = size_mem-1;
 
     FILE* file = fopen(name, "rb");
+    
+    if (!file) { error("file doesnt exist!"); }
+
     for (uint16_t i = 0; !feof(file); i++) {
         uint16_t buf;
         fread(&buf, sizeof(buf), 1, file);
         cpu.mem[i] = buf;
     }
+
+    //todo
+
+    fclose(file);
 }
 
 void print_num(int n) {
@@ -82,7 +84,7 @@ void print_regs() {
 
 int main(int argc, char* argv[]) {
     if (argc == 1) { error("no prog bin file provided!"); }
-
+    
     prepare(argv[1]);
 
     // print_memory();
