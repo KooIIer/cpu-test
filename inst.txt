@@ -3,7 +3,7 @@
 02. VL0 <8 val> - write <val> to V reg0 (2nd byte)
 03. VL1 <8 val> - write <val> to V reg1 (1st byte)
 04. MMR <4 1reg> <4 2reg> - read mem from adr <1reg> to <2reg>
-05. MMW <4 1reg> <4 2reg> - write <1reg> to mem adr <2reg>
+05. MMW <4 1reg> <4 2reg> - write <2reg> to mem adr <1reg>
 06. STR <4 reg> - stack -> reg
 07. STW <4 reg> - reg -> stack
 08. INC <4 reg> - reg++

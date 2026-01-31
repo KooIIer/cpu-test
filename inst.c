@@ -3,6 +3,8 @@
 //arg1 = all_args >> 4
 //arg2 = all_args & 0b00001111
 
+//todo flags
+
 void inst_nop(uint8_t all_args, cpu_type* cpu) {}
 void inst_set(uint8_t all_args, cpu_type* cpu) {
     cpu->regs.reg[all_args>>4] = cpu->regs.reg[all_args&0b00001111];
@@ -15,15 +17,19 @@ void inst_vl1(uint8_t all_args, cpu_type* cpu) {
     cpu->regs.v &= 0b0000000011111111;
     cpu->regs.v += all_args << 8;
 }
-void inst_mmr(uint8_t all_args, cpu_type* cpu) {}
-void inst_mmw(uint8_t all_args, cpu_type* cpu) {}
+void inst_mmr(uint8_t all_args, cpu_type* cpu) {
+    cpu->regs.reg[all_args & 0b00001111] = cpu->mem[cpu->regs.reg[all_args>>4]];
+}
+void inst_mmw(uint8_t all_args, cpu_type* cpu) {
+    cpu->mem[cpu->regs.reg[all_args>>4]] = cpu->regs.reg[all_args & 0b00001111];
+}
 void inst_str(uint8_t all_args, cpu_type* cpu) {}
 void inst_stw(uint8_t all_args, cpu_type* cpu) {}
 void inst_inc(uint8_t all_args, cpu_type* cpu) {
-    cpu->regs.reg[all_args]++;
+    cpu->regs.reg[all_args&0b00001111]++;
 }
 void inst_dec(uint8_t all_args, cpu_type* cpu) {
-    cpu->regs.reg[all_args]--;
+    cpu->regs.reg[all_args&0b00001111]--;
 }
 void inst_add(uint8_t all_args, cpu_type* cpu) {
     cpu->regs.m = cpu->regs.reg[all_args>>4] + cpu->regs.reg[all_args&0b00001111];
@@ -35,7 +41,7 @@ void inst_mul(uint8_t all_args, cpu_type* cpu) {
     cpu->regs.m = cpu->regs.reg[all_args>>4] * cpu->regs.reg[all_args&0b00001111];
 }
 void inst_div(uint8_t all_args, cpu_type* cpu) {
-    cpu->regs.m = cpu->regs.reg[all_args>>4] * cpu->regs.reg[all_args&0b00001111];
+    cpu->regs.m = cpu->regs.reg[all_args>>4] / cpu->regs.reg[all_args&0b00001111];
 }
 
 const instruction instructions[] = {

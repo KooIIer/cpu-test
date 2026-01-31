@@ -41,6 +41,7 @@ typedef struct {
     {"DIV", 2, {REG, REG}},
 };*/
 
+//todo
 char regs[] = {'P', 'S', 'F', 'V', 'M', ' ', ' ', ' ', ' ', ' ', 'A', 'B', 'C', 'X', 'Y', 'Z'};
 
 int parse_val(char* str, int warning_limit) {
